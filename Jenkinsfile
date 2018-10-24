@@ -1,6 +1,11 @@
 pipeline {
   agent any
   stages {
+    stage('Clean') {
+      steps {
+        bat 'gradlew clean'
+      }
+    }
     stage('Compile') {
       steps {
         bat 'gradlew compileDebugSources'
@@ -18,6 +23,13 @@ pipeline {
           reportFiles: 'index.html',
           reportName: 'Unit Test Report'      
         ])
+      }
+    }
+    stage('Build Debug APK') {
+      steps {
+        bat 'gradlew assembleDebug'
+        // publish apk
+        archiveArtifacts: 'app/build/outputs/apk/debug/*.apk'
       }
     }
   }
