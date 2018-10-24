@@ -1,5 +1,5 @@
 node {
     stage('Compile') {
-        bat './gradlew compileDebugSources'
+        bat "./gradlew test"
     }
   }
