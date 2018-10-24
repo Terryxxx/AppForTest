@@ -1,4 +1,4 @@
 # AppForTest
 Only for Jenkins
 
-For Test n c a
+For Test n c a a
