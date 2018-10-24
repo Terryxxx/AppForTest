@@ -1,36 +1,25 @@
 pipeline {
-    agent {
-        // Run on a build agent where we have the android sdk installed
-        label 'android'
+  agent none
+  stages {
+    stage('Compile') {
+      steps {
+        sh './gradlew compileDebugSources'
+      }
     }
-    options {
-        // Stop the build early in case of compile or test failures
-        skipStagesAfterUnstable()
+    stage('Unit test') {
+      steps {
+        sh './gradlew testDebugUnitTest testDebugUnitTest'
+        junit '**/TEST-*.xml'
+      }
     }
-    stages {
-        stage('Compile') {
-            steps {
-                // Compile the app and its dependencies
-                sh './gradlew compileDebugSources'
-            }
-        }
-        stage('Unit test') {
-            steps {
-                // Compile and run the unit tests for the app and its dependencies
-                sh './gradlew testDebugUnitTest testDebugUnitTest'
-
-                // Analyse the test results and update the build result as appropriate
-                junit '**/TEST-*.xml'
-            }
-        }
-        stage('Build APK') {
-            steps {
-                // Finish building and packaging the APK
-                sh './gradlew assembleDebug'
-
-                // Archive the APKs so that they can be downloaded from Jenkins
-                archiveArtifacts '**/*.apk'
-            }
-        }
+    stage('Build APK') {
+      steps {
+        sh './gradlew assembleDebug'
+        archiveArtifacts '**/*.apk'
+      }
     }
+  }
+  options {
+    skipStagesAfterUnstable()
+  }
 }
