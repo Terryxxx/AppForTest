@@ -1,10 +1,7 @@
-pipeline {
-  agent any
-  stages {
+node {
     stage('Compile') {
       steps {
-        sh './gradlew compileDebugSources'
+        bat './gradlew compileDebugSources'
       }
     }
   }
-}
