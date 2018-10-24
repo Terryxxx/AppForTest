@@ -29,7 +29,7 @@ pipeline {
       steps {
         bat 'gradlew assembleDebug'
         // publish apk
-        archiveArtifacts: 'app/build/outputs/apk/debug/*.apk'
+        archiveArtifacts 'app/build/outputs/apk/debug/*.apk'
       }
     }
   }
