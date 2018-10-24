@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 28
     aaptOptions.cruncherEnabled = false
@@ -14,10 +18,20 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            //这里修改apk文件名
+            outputFileName = "App-${releaseTime()}.apk"
+        }
+    }
+
 }
 
 dependencies {
