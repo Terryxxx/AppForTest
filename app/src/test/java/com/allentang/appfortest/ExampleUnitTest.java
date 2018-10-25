@@ -23,4 +23,7 @@ public class ExampleUnitTest {
 
     @Test
     public void addition_test3() { assertEquals( 5, 5);}
+
+    @Test
+    public void addition_test4() { assertEquals( 5, 5);}
 }
